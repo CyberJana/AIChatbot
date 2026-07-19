@@ -12,6 +12,7 @@ import streamlit as st
 
 from chatbot.chat_engine import ChatEngine
 from chatbot.embeddings import EmbeddingService
+from chatbot.paths import ENV_FILE, get_upload_directory
 from chatbot.pdf_loader import PDFLoader
 from chatbot.retriever import FAQRetriever
 from chatbot.text_splitter import TextSplitter
@@ -19,11 +20,7 @@ from chatbot.utils import ChatAnswer, ensure_directory, format_source_label
 from chatbot.vector_store import FAISSVectorStore
 
 
-APP_DIR = Path(__file__).resolve().parent
-UPLOAD_DIR = APP_DIR / "data" / "uploads"
-
-
-load_dotenv(APP_DIR / ".env")
+load_dotenv(ENV_FILE)
 
 
 @dataclass(slots=True)
@@ -115,12 +112,6 @@ def save_uploaded_files(uploaded_files: list[Any], upload_dir: Path) -> list[Pat
         saved_paths.append(destination)
 
     return saved_paths
-
-
-def get_upload_directory() -> Path:
-    """Return the repository-relative directory used for uploaded PDFs."""
-
-    return UPLOAD_DIR
 
 
 def process_documents(uploaded_files: list[Any], config: AppConfig) -> None:

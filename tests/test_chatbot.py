@@ -2,9 +2,8 @@
 
 from __future__ import annotations
 
-from app import UPLOAD_DIR, get_upload_directory
-
 from chatbot.chat_engine import ChatEngine
+from chatbot.paths import UPLOAD_DIR, get_upload_directory
 from chatbot.text_splitter import TextSplitter
 from chatbot.utils import PDFPage, RetrievedChunk, TextChunk, format_source_label
 
@@ -109,3 +108,6 @@ def test_get_upload_directory_is_repo_relative(monkeypatch, tmp_path) -> None:
     monkeypatch.chdir(tmp_path)
 
     assert get_upload_directory() == UPLOAD_DIR
+    assert UPLOAD_DIR.is_absolute()
+    assert UPLOAD_DIR.name == "uploads"
+    assert UPLOAD_DIR.parent.name == "data"
