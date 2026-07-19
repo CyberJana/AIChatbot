@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-import app
+from app import UPLOAD_DIR, get_upload_directory
 
 from chatbot.chat_engine import ChatEngine
 from chatbot.text_splitter import TextSplitter
@@ -108,4 +108,4 @@ def test_get_upload_directory_is_repo_relative(monkeypatch, tmp_path) -> None:
 
     monkeypatch.chdir(tmp_path)
 
-    assert app.get_upload_directory() == app.UPLOAD_DIR
+    assert get_upload_directory() == UPLOAD_DIR
