@@ -81,8 +81,8 @@ AI_FAQ_Chatbot/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/AI_FAQ_Chatbot.git
-cd AI_FAQ_Chatbot
+git clone https://github.com/CyberJana/AIChatbot.git
+cd AIChatbot
 ```
 
 ### 2. Create a virtual environment
@@ -196,7 +196,13 @@ Then update this section with markdown image links:
 Run the unit tests with:
 
 ```bash
-pytest tests/test_chatbot.py
+python -m pytest tests/test_chatbot.py -q
+```
+
+Validate that the application modules compile with:
+
+```bash
+python -m compileall app.py chatbot tests
 ```
 
 ---

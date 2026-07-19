@@ -19,7 +19,11 @@ from chatbot.utils import ChatAnswer, ensure_directory, format_source_label
 from chatbot.vector_store import FAISSVectorStore
 
 
-load_dotenv()
+APP_DIR = Path(__file__).resolve().parent
+UPLOAD_DIR = APP_DIR / "data" / "uploads"
+
+
+load_dotenv(APP_DIR / ".env")
 
 
 @dataclass(slots=True)
@@ -113,13 +117,19 @@ def save_uploaded_files(uploaded_files: list[Any], upload_dir: Path) -> list[Pat
     return saved_paths
 
 
+def get_upload_directory() -> Path:
+    """Return the repository-relative directory used for uploaded PDFs."""
+
+    return UPLOAD_DIR
+
+
 def process_documents(uploaded_files: list[Any], config: AppConfig) -> None:
     """Run the full PDF ingestion pipeline and store the search index."""
 
     if not uploaded_files:
         raise ValueError("Please upload at least one PDF file before processing.")
 
-    upload_dir = Path("data") / "uploads"
+    upload_dir = get_upload_directory()
     saved_paths = save_uploaded_files(uploaded_files=uploaded_files, upload_dir=upload_dir)
 
     pdf_loader = PDFLoader()

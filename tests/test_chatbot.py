@@ -2,6 +2,10 @@
 
 from __future__ import annotations
 
+from pathlib import Path
+
+import app
+
 from chatbot.chat_engine import ChatEngine
 from chatbot.text_splitter import TextSplitter
 from chatbot.utils import PDFPage, RetrievedChunk, TextChunk, format_source_label
@@ -99,3 +103,11 @@ def test_format_source_label_includes_file_and_page() -> None:
     )
 
     assert format_source_label(chunk) == "support_guide.pdf - Page 3"
+
+
+def test_get_upload_directory_is_repo_relative(monkeypatch, tmp_path: Path) -> None:
+    """The uploads directory should not depend on the current working directory."""
+
+    monkeypatch.chdir(tmp_path)
+
+    assert app.get_upload_directory() == Path(app.__file__).resolve().parent / "data" / "uploads"
