@@ -3,6 +3,7 @@
 __all__ = [
     "chat_engine",
     "embeddings",
+    "paths",
     "pdf_loader",
     "retriever",
     "text_splitter",

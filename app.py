@@ -12,6 +12,7 @@ import streamlit as st
 
 from chatbot.chat_engine import ChatEngine
 from chatbot.embeddings import EmbeddingService
+from chatbot.paths import ENV_FILE, UPLOAD_DIR
 from chatbot.pdf_loader import PDFLoader
 from chatbot.retriever import FAQRetriever
 from chatbot.text_splitter import TextSplitter
@@ -19,7 +20,7 @@ from chatbot.utils import ChatAnswer, ensure_directory, format_source_label
 from chatbot.vector_store import FAISSVectorStore
 
 
-load_dotenv()
+load_dotenv(ENV_FILE)
 
 
 @dataclass(slots=True)
@@ -119,8 +120,7 @@ def process_documents(uploaded_files: list[Any], config: AppConfig) -> None:
     if not uploaded_files:
         raise ValueError("Please upload at least one PDF file before processing.")
 
-    upload_dir = Path("data") / "uploads"
-    saved_paths = save_uploaded_files(uploaded_files=uploaded_files, upload_dir=upload_dir)
+    saved_paths = save_uploaded_files(uploaded_files=uploaded_files, upload_dir=UPLOAD_DIR)
 
     pdf_loader = PDFLoader()
     pages = pdf_loader.load_files(saved_paths)
